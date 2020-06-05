@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Генерация бота</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style type="text/css">
+        p {
+            font-size: 14px;
+            margin: 10px 30px;
+            font-family: Helvetica;
+        }
+        button {
+            font-family: Helvetica;
+        }
+        label{
+            font-family: Helvetica;
+            font-size: 12px;
+            color: #8593BC;
+            font-weight: 200;
+        }
+        .separator{
+            display: block;
+            height: 10px;
+        }
+        
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            margin: 0px 30px;
+            /* border: 1px solid #ccc;
+            background-color: #f1f1f1; */
+        }
+
+        /* Button */
+        .tab button {
+            text-align: center;
+            margin-left: auto; margin-right: auto;
+            background-color: #577EF4;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            padding: 10px 30px;
+            text-align: center;
+            font-size: 12px;
+            margin: 0px 20px 0px 0px;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Button hover */
+        .tab button:hover {
+            background-color: rgb(132, 161, 245);
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color:#CDD4E5;
+            font-weight: bold;
+            padding: 10px 40px;
+            outline:0;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 30px;
+            -webkit-animation: fadeEffect 1s;
+            animation: fadeEffect 1s;
+        }
+
+        /* Fade in tabs */
+        @-webkit-keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes fadeEffect {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        input[type=text], select {
+            width: 300px;
+            padding: 12px 20px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #8593BC;
+            border-radius: 20px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input[type=submit] {
+            background-color: #59C892;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            padding: 15px 30px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        input[type=submit]:hover {
+            background-color: rgb(45, 175, 112);
+        }
+
+        #stepNum {
+            font-size: 14px;
+            font-family: Helvetica;
+            font-weight: 200;
+            margin-top: 30px;
+
+        }
+        #stepTitle{
+            font-size: 18px;
+            font-family: Helvetica;
+            font-weight: 600;
+        }
+        #separationLine{
+            background-color: #EEF0F6;
+            display: block;
+            height: 2px;
+            margin: 20px 0px 30px 0px;
+        }
+        #choosePlatform{
+            font-family: Helvetica;
+            font-size: 12px;
+            color: #8593BC;
+            font-weight: 200;
+        }
+
+
+    </style>
+</head>
+
+
+<body onload="">
+
+    <p id="stepNum">Шаг 2:</p>
+    <p id="stepTitle">Конфигурация бота.</p>
+    <div id="separationLine"></div>
+    
+    <p id="choosePlatform">Какую платформу использовать?</p>
+
+    <div class="tab">
+      <button class="tablinks" onclick="openCity(event, 'Azure')">Azure</button>
+      <button class="tablinks" onclick="openCity(event, 'Google')">Google Cloud</button>
+      <button class="tablinks" onclick="openCity(event, 'AWS')">AWS</button>
+    </div>
+    <div id="Azure" class="tabcontent">
+        <div id="azure_form" class="azure">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="separator"></div>
+                <label for="serverLocation">Which server location do you prefer?</label><br>
+                <select id="serverLocation" name="serverLocation">
+                    <option value="NorthEurope">North Europe</option>
+                    <option value="KoreaCentral">Korea Central</option>
+                    <option value="WestEurope">West Europe</option>
+                    <option value="WestUS">West US</option>
+
+                    <option value="SouthAfrica">South Africa</option>
+                    <option value="NorwayEast">Norway East</option>
+                    <option value="JapanEast">Japan East</option>
+                </select><br>
+                <div class="separator"></div>
+
+                <label for="monthsReceipt">For how many months to store the receipts?:</label><br>
+                <select id="monthsReceipt" name="monthsReceipt">
+                    <option value="1">1</option>
+                    <option value="6">6</option>
+                    <option value="12">12</option>
+                    <option value="24">24</option>
+                </select><br>
+                <div class="separator"></div>
+                
+                <label for="subscriptionId">Subscription ID:</label><br>
+                <input type="text" id="subscriptionId" name="subscriptionId" placeholder="Subscription ID..."><br>
+                <div class="separator"></div>
+
+                <label for="tenant">Tenant:</label><br>
+                <input type="text" id="tenant" name="tenant" placeholder="Tenant..."><br>
+                <div class="separator"></div>
+
+                <!-- Addional fields -->
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" placeholder="Name..."><br>
+                <div class="separator"></div>
+
+                <label for="password">Password:</label><br>
+                <input type="text" id="password" name="password" placeholder="Password..."><br>
+                <div class="separator"></div>
+
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" placeholder="Email..."><br>
+                <div class="separator"></div>
+                
+                <label for="token">Токен от бота:</label><br>
+                <input type="text" id="token" name="token" placeholder="Токен от бота..."><br>
+                <div class="separator"></div>
+
+                <label for="tax_gov">Код от налоговой:</label><br>
+                <input type="text" id="tax_gov" name="tax_gov" placeholder="Код от налоговой..."><br>
+                <div class="separator"></div>
+
+                <label for="phone">Номер телефона:</label><br>
+                <input type="text" id="phone" name="phone" placeholder="Номер телефона..."><br>
+                <div class="separator"></div>
+
+                <label for="botname">Название бота:</label><br>
+                <input type="text" id="botname" name="botname" placeholder="Название бота..."><br>
+                <div class="separator"></div>
+                
+                <input type="hidden" name="platform" value="azure" />
+
+                <input type="submit" value="Завершить"><br>
+            </form>
+        </div>
+    </div>
+
+    <div id="Google" class="tabcontent">
+        <div id="google_form" class="google">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="separator"></div>
+                <label for="serverLocation">Which server location do you prefer?</label><br>
+                <select id="serverLocation" name="serverLocation">
+                    <option value="europe-west1">europe-west1</option>
+                    <option value="europe-west2">europe-west2</option>
+                    <option value="europe-west3">europe-west3</option>
+                    <option value="asia-northeast1">asia-northeast1</option>
+                    <option value="usa-central1">usa-central1</option>
+                    <option value="asia-east2">asia-east2</option>
+                    
+                </select><br>
+                <div class="separator"></div>
+
+                <label for="monthsReceipt">For how many months to store the receipts?:</label><br>
+                <select id="monthsReceipt" name="monthsReceipt">
+                    <option value="1">1</option>
+                    <option value="6">6</option>
+                    <option value="12">12</option>
+                    <option value="24">24</option>
+                </select><br>
+                <div class="separator"></div>
+
+                <label for="accessID">Access File:</label><br>
+                <input type="file" id="googleCredentials" name="json" accept=".json">
+                <div class="separator"></div>
+                <div class="separator"></div>
+                
+                <!-- Addional fields -->
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" placeholder="Email..."><br>
+                <div class="separator"></div>
+
+                <label for="token">Токен от бота:</label><br>
+                <input type="text" id="token" name="token" placeholder="Токен от бота..."><br>
+                <div class="separator"></div>
+
+                <label for="tax_gov">Код от налоговой:</label><br>
+                <input type="text" id="tax_gov" name="tax_gov" placeholder="Код от налоговой..."><br>
+                <div class="separator"></div>
+
+                <label for="phone">Номер телефона:</label><br>
+                <input type="text" id="phone" name="phone" placeholder="Номер телефона..."><br>
+                <div class="separator"></div>
+
+                <label for="botname">Название бота:</label><br>
+                <input type="text" id="botname" name="botname" placeholder="Название бота..."><br>
+                <div class="separator"></div>
+
+                <input type="hidden" name="platform" value="google" />
+
+                <input type="submit" value="Завершить"><br>
+            </form>
+        </div>
+    </div>
+    
+    
+    <div id="AWS" class="tabcontent">
+        <div id="aws_form" class="aws">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="separator"></div>
+                <label for="serverLocation">Сервер в какой локации выбрать?</label><br>
+                <select id="serverLocation" name="serverLocation">
+                    <option value="eu-north-1">eu-north-1</option>
+                    <option value="ap-northeast-2">ap-northeast-2</option>
+                    <option value="eu-west-1">eu-west-1</option>
+                    <option value="eu-central-1">eu-central-1</option>
+                    
+
+                    <option value="af-sout-1">af-sout-1</option>
+                    <option value="ap-east-1">ap-east-1</option>
+                    <option value="ap-southeast-2">ap-southeast-2</option>
+                    <option value="ap-sout-1">ap-sout-1</option>
+
+                    <option value="us-east-1">us-east-1</option>
+                    <option value="us-west-1">us-west-1</option>
+                    <option value="sa-east-1">sa-east-1</option>
+                </select><br>
+                <div class="separator"></div>
+
+                <label for="monthsReceipt">Сколько месяцев хранить чеки?</label><br>
+                <select id="monthsReceipt" name="monthsReceipt">
+                    <option value="1">1</option>
+                    <option value="6">6</option>
+                    <option value="12">12</option>
+                    <option value="24">24</option>
+                </select><br>
+                <div class="separator"></div>
+                
+                <label for="accessID">Access Key ID:</label><br>
+                <input type="text" id="accessID" name="accessID" placeholder="Access Key ID..."><br>
+                <div class="separator"></div>
+
+                <label for="secretKey">Secret Access Key:</label><br>
+                <input type="text" id="secretKey" name="secretKey" placeholder="Secret Access Key..."><br>
+                <div class="separator"></div>
+                
+                <!-- Addional fields -->
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email" placeholder="Email..."><br>
+                <div class="separator"></div>
+
+                <label for="token">Токен от бота:</label><br>
+                <input type="text" id="token" name="token" placeholder="Токен от бота..."><br>
+                <div class="separator"></div>
+
+                <label for="tax_gov">Код от налоговой:</label><br>
+                <input type="text" id="tax_gov" name="tax_gov" placeholder="Код от налоговой..."><br>
+                <div class="separator"></div>
+
+                <label for="phone">Номер телефона:</label><br>
+                <input type="text" id="phone" name="phone" placeholder="Номер телефона..."><br>
+                <div class="separator"></div>
+
+                <label for="botname">Название бота:</label><br>
+                <input type="text" id="botname" name="botname" placeholder="Название бота..."><br>
+                <div class="separator"></div>
+
+                <input type="hidden" name="platform" value="aws" />
+
+                <input type="submit" value="Завершить"><br>
+            </form>
+        </div>
+    </div>
+    
+
+    <script>
+        function openCity(evt, platformName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(platformName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
+</body>
+</html>
